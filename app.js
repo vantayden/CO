@@ -8,8 +8,8 @@ app.get('/data', (req, res) => {
     if (req.query.id && req.query.raw) {
         const data = {
             sensorID: parseInt(req.query.id),
-            raw: parseInt(req.query.value),
-            value: calCO(req.query.value),
+            raw: parseInt(req.query.raw),
+            value: calCO(req.query.raw),
             insertedTime: Date.now()
         }
         DB.collection(`data`).insert(data).then(() => {
