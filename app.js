@@ -14,7 +14,7 @@ app.get('/data', (req, res) => {
             insertedTime,
         }
         DB.collection(`data`).insert(data).then(() => {
-            console.log(`Inserted ${req.query.id}`)
+            //console.log(`Inserted ${req.query.id}`)
             res.send({ error: false })
         }).catch(error => {
             console.log(`DB Error`, error)
