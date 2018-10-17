@@ -6,11 +6,12 @@ let DB
 
 app.get('/data', (req, res) => {
     if (req.query.id && req.query.raw) {
+        let insertedTime = req.query.time ? req.query.time : Date.now()
         const data = {
             sensorID: parseInt(req.query.id),
             raw: parseInt(req.query.raw),
             value: calCO(req.query.raw),
-            insertedTime: Date.now()
+            insertedTime,
         }
         DB.collection(`data`).insert(data).then(() => {
             console.log(`Inserted ${req.query.id}`)
