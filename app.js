@@ -5,7 +5,7 @@ const PORT = 2224
 let DB
 
 app.get('/data', (req, res) => {
-    if (req.query.id) {
+    if (req.query.id && req.query.raw) {
         let insertedTime = req.query.time ? req.query.time : Date.now()
         const data = {
             sensorID: parseInt(req.query.id),
