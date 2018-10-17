@@ -9,8 +9,8 @@ app.get('/data', (req, res) => {
         let insertedTime = req.query.time ? req.query.time : Date.now()
         const data = {
             sensorID: parseInt(req.query.id),
-            raw: parseInt(req.query.raw),
-            value: req.query.raw ? calCO(req.query.raw) : calCOPPM(req.query.ppm),
+            raw: req.query.ppm ? parseInt(req.query.ppm) : parseInt(req.query.raw),
+            value: req.query.ppm ? calCOPPM(req.query.ppm) : calCO(req.query.raw) ,
             insertedTime,
         }
         DB.collection(`data`).insert(data).then(() => {
