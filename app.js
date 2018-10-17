@@ -5,12 +5,12 @@ const PORT = 2224
 let DB
 
 app.get('/data', (req, res) => {
-    if (req.query.id && req.query.raw) {
+    if (req.query.id) {
         let insertedTime = req.query.time ? req.query.time : Date.now()
         const data = {
             sensorID: parseInt(req.query.id),
             raw: parseInt(req.query.raw),
-            value: calCO(req.query.raw),
+            value: req.query.raw ? calCO(req.query.raw) : calCOPPM(req.query.ppm),
             insertedTime,
         }
         DB.collection(`data`).insert(data).then(() => {
@@ -43,4 +43,8 @@ function calCO(co, t = 25) {
     const MIN = 10
     let ppb = parseInt(co) * ((MAX - MIN) / 1024) * 1000
     return (ppb * 12.187 * 28) / (273.15 + t)
+}
+
+function calCOPPM(ppm, t = 25){
+    return (ppm * 1000 * 12.187 * 28) / (273.15 + t)
 }
