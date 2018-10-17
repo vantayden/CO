@@ -6,12 +6,16 @@ let DB
 
 app.get('/data', (req, res) => {
     if (req.query.id && req.query.raw) {
-        let insertedTime = req.query.time ? req.query.time : Date.now()
+        let insertedTime = req.query.time ? Number(req.query.time) : Date.now()
         const data = {
             sensorID: parseInt(req.query.id),
             raw: req.query.ppm ? parseInt(req.query.ppm) : parseInt(req.query.raw),
             value: req.query.ppm ? calCOPPM(req.query.ppm) : calCO(req.query.raw) ,
             insertedTime,
+        }
+        if(req.query.id == 6){
+            data.t = parseFloat(req.query.t)
+            data.h = parseFloat(req.query.h)
         }
         DB.collection(`data`).insert(data).then(() => {
             //console.log(`Inserted ${req.query.id}`)
